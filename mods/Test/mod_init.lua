@@ -2,7 +2,7 @@ local mod_path = "mods/Test"
 local mod = {}
 
 local function load_assets(toAdd, toPath)
-    local filesTable = love.filesystem.enumerate(toPath)
+    local filesTable = love.filesystem.getDirectoryItems(toPath)
     for i,v in ipairs(filesTable) do
         local file = toPath.."/"..v
         if love.filesystem.isFile(file) then
@@ -23,7 +23,7 @@ local function mod_init()
 	mod.paths = {}
 	mod.paths.root = mod_path
 	mod.script = require(mod_path.."/script")
-	
+
 	mod.characters = {}
 	mod.locations = {}
 	mod.saves = {}
@@ -31,7 +31,7 @@ local function mod_init()
 	mod.paths.characters = mod_path.."/characters"
 	mod.paths.saves = mod_path.."/saves"
 	mod.paths.locations = mod_path.."/locations"
-		
+
 	load_assets(mod.characters, mod.paths.characters)
 	load_assets(mod.locations, mod.paths.locations)
 	load_assets(mod.saves, mod.paths.saves)

@@ -58,7 +58,7 @@ function InGame:draw()
 		v:draw()
 	end
 
-	love.graphics.setCaption(self.mod.name.." - "..self.mod.save_file.current_location.." - current chapter: "..self.mod.save_file.current_chapter..", current page: "..self.mod.save_file.current_page)
+	love.window.setTitle(self.mod.name.." - "..self.mod.save_file.current_location.." - current chapter: "..self.mod.save_file.current_chapter..", current page: "..self.mod.save_file.current_page)
 end
 
 function InGame:update(dt)
@@ -84,7 +84,7 @@ function InGame:keyreleased(key, unicode)
 end
 
 function InGame:mousepressed(x, y, button)
-	if button == "l" then
+	if button == 1 then
 		if table.getn(self.menus) < 1 then
 			self.mod.save_file.current_page = self.mod.save_file.current_page + 1
 			self.wait = false
@@ -96,19 +96,12 @@ function InGame:mousepressed(x, y, button)
 				love.event.quit()
 			end
 		else
-			local a = false
 			for i, v in pairs(self.menus) do
 				if v:check_click(x, y) then
-					a = true
-					break
+					self.wait = false
+					Game.menus = {}
+					return
 				end
-			end
-
-			if a then
-				Cirno:say("A")
-				self.wait = false
-				Game.menus = {}
-				print(table.getn(Game.menus))
 			end
 		end
 	end
